@@ -27,13 +27,13 @@ namespace CryptoPrices
                 var tradeSignals = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("TradeSignal")).Select(key => ConfigurationManager.AppSettings[key]).Select(values =>
                 {
                     var data = values.Split(',');
-                    var coin = data[0];
-                    var pair = data[1];
-                    var exchange = data[2];
-                    var entry = double.Parse(data[3]);
-                    var target1 = double.Parse(data[4]);
-                    var target2 = double.Parse(data[5]);
-                    var stopLoss = double.Parse(data[6]);
+                    var coin = data[0].Trim();
+                    var pair = data[1].Trim();
+                    var exchange = data[2].Trim();
+                    var entry = double.Parse(data[3].Trim());
+                    var target1 = double.Parse(data[4].Trim());
+                    var target2 = double.Parse(data[5].Trim());
+                    var stopLoss = double.Parse(data[6].Trim());
                     return new Tuple<string, string, string, double, double, double, double>(coin, pair, exchange, entry, target1, target2, stopLoss);
                 });
 
@@ -108,9 +108,9 @@ namespace CryptoPrices
                     var bitcoinForks = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("Fork")).Select(key => ConfigurationManager.AppSettings[key]).Select(values =>
                     {
                         var data = values.Split(',');
-                        var coin = data[0];
+                        var coin = data[0].Trim();
                         var pair = "USD";
-                        var multiplier = int.Parse(data[1]);
+                        var multiplier = int.Parse(data[1].Trim());
                         return new Tuple<string, string, int>(coin, pair, multiplier);
                     });
 
