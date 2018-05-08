@@ -22,6 +22,12 @@ namespace CryptoPrices
             var assessTA = !bool.TryParse(ConfigurationManager.AppSettings["AssessTA"], out bool assessTaResult) ? false : assessTaResult;
             var showForks = !bool.TryParse(ConfigurationManager.AppSettings["EnableForks"], out bool forkResult) ? false : forkResult;
 
+            var best = ConfigurationManager.AppSettings["Best"];
+            var great = ConfigurationManager.AppSettings["Great"];
+            var good  = ConfigurationManager.AppSettings["Good"];
+            var monitor = ConfigurationManager.AppSettings["Monitor"];
+            var bad = ConfigurationManager.AppSettings["Bad"];
+
             if (enableTA)
             {
                 var tradeSignals = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("TradeSignal")).Select(key => ConfigurationManager.AppSettings[key]).Select(values =>
@@ -64,26 +70,11 @@ namespace CryptoPrices
                         if (assessTaResult)
                         {
                             log = log + Environment.NewLine;
-                            if (curPrice > t2)
-                            {
-                                log = log + "   T2 Reached (SELL)";
-                            }
-                            else if (curPrice > t1)
-                            {
-                                log = log + "   T1 Reached (SELL 50%)";
-                            }
-                            else if (curPrice > entry)
-                            {
-                                log = log + "   Price > Entry (HODL)";
-                            }
-                            else if (curPrice > stop)
-                            {
-                                log = log + "   Price < Entry (MONITOR)";
-                            }
-                            else if (curPrice <= stop)
-                            {
-                                log = log + "   Price < Stop (#REKT)";
-                            }
+                            if (curPrice > t2) { log += best; }
+                            else if (curPrice > t1) { log += great; }
+                            else if (curPrice > entry) { log += good; }
+                            else if (curPrice > stop) { log += monitor; }
+                            else if (curPrice <= stop) { log += bad; }
                         }
                         logBuilder.Add(log);
 
