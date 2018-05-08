@@ -18,11 +18,11 @@ namespace CryptoPrices
         static void Main(string[] args)
         {
             var refreshRateInSeconds = !int.TryParse(ConfigurationManager.AppSettings["RefreshRateInSeconds"], out int result) || result < 30 ? 30 : result;
-            var showTA = !bool.TryParse(ConfigurationManager.AppSettings["ShowTA"], out bool taResult) ? false : taResult;
+            var enableTA = !bool.TryParse(ConfigurationManager.AppSettings["EnableTA"], out bool taResult) ? false : taResult;
             var assessTA = !bool.TryParse(ConfigurationManager.AppSettings["AssessTA"], out bool assessTaResult) ? false : assessTaResult;
-            var showForks = !bool.TryParse(ConfigurationManager.AppSettings["ShowForks"], out bool forkResult) ? false : forkResult;
+            var showForks = !bool.TryParse(ConfigurationManager.AppSettings["EnableForks"], out bool forkResult) ? false : forkResult;
 
-            if (showTA)
+            if (enableTA)
             {
                 var tradeSignals = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("TradeSignal")).Select(key => ConfigurationManager.AppSettings[key]).Select(values =>
                 {
