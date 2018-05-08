@@ -26,6 +26,17 @@ namespace CryptoPrices
                 var stopLoss = double.Parse(data[6]);
                 return new Tuple<string, string, string, double, double, double, double>(coin, pair, exchange, entry, target1, target2, stopLoss);
             });
+
+
+            var bitcoinForks = ConfigurationManager.AppSettings.AllKeys.Where(key => key.StartsWith("Fork")).Select(key => ConfigurationManager.AppSettings[key]).Select(values =>
+            {
+                var data = values.Split(',');
+                var coin = data[0];
+                var pair = "USD";
+                var multiplier = int.Parse(data[1]);
+                return new Tuple<string, string, int>(coin, pair, multiplier);
+            });
+
         }
     }
 }
